@@ -1,10 +1,15 @@
 import { Register } from '@/components/Register/Register';
-import React from 'react';
+import React, { FC } from 'react';
 
-const PageRegister = () => {
+interface PageRegisterProps {
+  params: {
+    id: string;
+  };
+}
+const PageRegister: FC<PageRegisterProps> = ({ params }) => {
   return (
     <main className="flex justify-center items-center  min-h-screen max-w-7xl flex-wrap gap-4 mx-auto ">
-      <Register />
+      <Register idEvent={params.id} />
     </main>
   );
 };

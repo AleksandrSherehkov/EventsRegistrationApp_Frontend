@@ -27,7 +27,9 @@ export interface EventsParams {
 export interface RegisterParams {
   name: string;
   email: string;
-  password: string;
+  birthDate: string;
+  referralSource: string;
+  eventId: string;
 }
 
 export interface UserResponse {

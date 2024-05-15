@@ -27,7 +27,7 @@ export const InputForm: React.FC<InputFormProps> = ({
   >(errorMessage);
   const [touched, setTouched] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
-  const labelRef = useRef<HTMLInputElement>(null);
+  const labelRef = useRef<HTMLLabelElement>(null);
 
   useEffect(() => {
     if (inputRef.current && labelRef.current) {
@@ -35,6 +35,10 @@ export const InputForm: React.FC<InputFormProps> = ({
       inputRef.current.style.paddingLeft = `${labelWidth + 24}px`;
     }
   }, [label]);
+
+  useEffect(() => {
+    setLocalErrorMessage(errorMessage);
+  }, [errorMessage]);
 
   const handleBlur = () => {
     setTouched(true);
@@ -57,12 +61,11 @@ export const InputForm: React.FC<InputFormProps> = ({
   return (
     <label className="relative flex flex-col items-center justify-center">
       <span
-        ref={labelRef as unknown as React.RefObject<HTMLLabelElement>}
+        ref={labelRef}
         className="absolute left-[14px] top-[35%] text-xs font-medium leading-[14px] tracking-textForm text-lightGrey"
       >
         {label}
       </span>
-
       <input
         name={name}
         ref={inputRef}
@@ -71,11 +74,11 @@ export const InputForm: React.FC<InputFormProps> = ({
         onBlur={handleBlur}
         onChange={handleChange}
         className={clsx(
-          'w-full rounded-xl border border-mediumGrey  bg-mediumGrey py-[14px] pr-8 text-xs font-medium leading-[14px] tracking-textForm text-fogWhite outline-none transition-all duration-300 hover:border-[1px] hover:border-fogWhiteHover focus:border focus:border-fogWhiteHover',
+          'w-full rounded-xl border border-mediumGrey bg-mediumGrey py-[14px] pr-8 text-xs font-medium leading-[14px] tracking-textForm text-fogWhite outline-none transition-all duration-300 hover:border-[1px] hover:border-fogWhiteHover focus:border focus:border-fogWhiteHover',
           {
-            ' border !border-lightGreen hover:border-lightGreen focus:border-lightGreen':
+            'border-lightGreen hover:border-lightGreen focus:border-lightGreen':
               !localErrorMessage && touched,
-            ' border-red hover:border-red focus:border-red':
+            'border-red hover:border-red focus:border-red':
               localErrorMessage && touched,
           }
         )}

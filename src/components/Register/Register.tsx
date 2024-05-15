@@ -1,20 +1,23 @@
 'use client';
 
-import React from 'react';
-import { TitleAuth } from './Title/Title';
+import React, { FC } from 'react';
+import { TitleAuth } from '../Title/Title';
 import { useFormState, useFormStatus } from 'react-dom';
 import { useEmailValidation } from '@/hooks/useEmailValidation';
-
 import { InputForm } from '../InputForm/InputForm';
-
 import { LinkCustom } from '../LinkCustom/LinkCustom';
 import { useNameValidation } from '@/hooks/useNameValidation';
-import { registerEventUser } from '@/services/actions';
 import { useBirthDateValidation } from '@/hooks/useBirthDateValidation';
 import { ButtonAuth } from '../Button/Button';
 import { Radio, RadioGroup } from '@nextui-org/react';
+import { registerEventUser } from '@/services/actions';
 
-export const Register = () => {
+interface RegisterProps {
+  idEvent: string;
+}
+
+export const Register: FC<RegisterProps> = ({ idEvent }) => {
+  console.log(`idEvent:`, idEvent);
   const [errorMessage, dispatch] = useFormState(registerEventUser, undefined);
 
   const { nameValid, validateName } = useNameValidation();
@@ -31,37 +34,36 @@ export const Register = () => {
         <form action={dispatch} className="flex flex-col gap-20 ">
           <div className="flex flex-col gap-8">
             <div className="relative flex flex-col gap-4">
+              <input type="hidden" name="eventId" value={idEvent} />
               <InputForm
                 type="text"
                 name="name"
                 label="Full name:"
-                errorMessage={errorMessage}
+                errorMessage={errorMessage || undefined}
                 validate={validateName}
               />
               <InputForm
                 type="text"
                 name="email"
                 label="Email:"
-                errorMessage={errorMessage}
+                errorMessage={errorMessage || undefined}
                 validate={validateEmail}
               />
               <InputForm
                 type="text"
-                name="birtDate"
+                name="birthDate"
                 placeholder="dd-MM-yyyy"
                 label="Date of birth:"
-                errorMessage={errorMessage}
+                errorMessage={errorMessage || undefined}
                 validate={validateBirthDate}
               />
             </div>
-            {errorMessage && (
-              <p className="ml-4 mt-4 text-[10px]  text-red md:text-xs ">
-                {errorMessage}
-              </p>
-            )}
+
             <RadioGroup
-              label="Where did yuo hear about this event?"
+              name="referralSource"
+              label="Where did you hear about this event?"
               orientation="horizontal"
+              defaultValue="myself"
             >
               <Radio value="social">
                 <span className="text-fogWhite">Social media</span>
@@ -70,7 +72,7 @@ export const Register = () => {
                 <span className="text-fogWhite">Friends</span>
               </Radio>
               <Radio value="myself">
-                <span className="text-fogWhite">Found myself</span>
+                <span className="text-fogWhite">Found it myself</span>
               </Radio>
             </RadioGroup>
           </div>
