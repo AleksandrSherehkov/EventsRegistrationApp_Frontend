@@ -5,7 +5,6 @@ export interface EventResponse {
   category: string;
   country: string;
   date: string;
-  endDate: string;
 }
 
 export interface ResponseList<T> {
@@ -13,7 +12,7 @@ export interface ResponseList<T> {
   page: number;
   pages: number;
   limit: number;
-  results: T[];
+  data: T[];
 }
 
 export interface EventsParams {
