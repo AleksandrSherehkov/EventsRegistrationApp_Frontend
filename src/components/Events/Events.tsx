@@ -9,7 +9,6 @@ import {
   CardFooter,
   Divider,
   Link,
-  ScrollShadow,
 } from '@nextui-org/react';
 
 export const Events = async () => {
@@ -37,19 +36,18 @@ export const Events = async () => {
         </div>
       </CardHeader>
       <Divider />
-
       <CardBody>
         <p className="text-small text-default-700 mb-2">Description:</p>
-        <p className=" h-60 text-sm text-default-400 overflow-x-auto border-x-scroll-white px-2  scrollbar-thin scrollbar-track-neutral-950 scrollbar-thumb-medium-grey">
+        <p className=" h-40 text-sm text-default-400 overflow-x-auto border-x-scroll-white px-2  scrollbar-thin scrollbar-track-neutral-950 scrollbar-thumb-medium-grey">
           {removeSourcePrefix(event.description)}
         </p>
       </CardBody>
       <Divider />
       <CardFooter className="flex w-full justify-around items-center gap-8">
-        <Link isBlock href="https://github.com/nextui-org/nextui">
+        <Link isBlock href={`/${event._id}/register`}>
           Register
         </Link>
-        <Link isBlock href="https://github.com/nextui-org/nextui">
+        <Link isBlock href={`/${event._id}/users`}>
           View
         </Link>
       </CardFooter>

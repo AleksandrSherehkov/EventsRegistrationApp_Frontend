@@ -17,7 +17,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.className} mx-auto p-5 max-w-7xl `}>
+      <body className={`${inter.className}  p-5 w-svw `}>
         <Providers>{children}</Providers>
       </body>
     </html>

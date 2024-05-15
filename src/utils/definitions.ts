@@ -23,3 +23,16 @@ export interface EventsParams {
   page?: number;
   limit?: number;
 }
+
+export interface RegisterParams {
+  name: string;
+  email: string;
+  password: string;
+}
+
+export interface UserResponse {
+  email: string;
+  name: string;
+  _idEvents?: string[];
+  _id: string;
+}
