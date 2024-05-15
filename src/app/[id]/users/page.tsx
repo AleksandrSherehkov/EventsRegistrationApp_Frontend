@@ -1,7 +1,14 @@
-import React from 'react';
+import { Users } from '@/components/Users/Users';
+import React, { FC } from 'react';
 
-const PageUsers = () => {
-  return <div>PageUsers</div>;
+interface PageUsersProps {
+  params: {
+    id: string;
+  };
+}
+
+const PageUsers: FC<PageUsersProps> = ({ params }) => {
+  return <Users idEvent={params.id} />;
 };
 
 export default PageUsers;

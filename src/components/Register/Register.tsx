@@ -17,8 +17,8 @@ interface RegisterProps {
 }
 
 export const Register: FC<RegisterProps> = ({ idEvent }) => {
-  console.log(`idEvent:`, idEvent);
   const [errorMessage, dispatch] = useFormState(registerEventUser, undefined);
+  console.log(`errorMessage:`, errorMessage);
 
   const { nameValid, validateName } = useNameValidation();
   const { emailValid, validateEmail } = useEmailValidation();
@@ -75,6 +75,11 @@ export const Register: FC<RegisterProps> = ({ idEvent }) => {
                 <span className="text-fogWhite">Found it myself</span>
               </Radio>
             </RadioGroup>
+            {errorMessage && (
+              <p className="ml-4 mt-4 text-[10px]  text-red md:text-xs ">
+                {errorMessage}
+              </p>
+            )}
           </div>
 
           <div className="flex w-full items-center justify-center sm:justify-around gap-[14px] md:justify-start md:gap-5">

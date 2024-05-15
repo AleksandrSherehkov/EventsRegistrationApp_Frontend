@@ -33,8 +33,10 @@ export interface RegisterParams {
 }
 
 export interface UserResponse {
-  email: string;
-  name: string;
-  _idEvents?: string[];
   _id: string;
+  name: string;
+  email: string;
+  birthDate: string;
+  referralSource: string;
+  eventIds: string[];
 }
