@@ -9,6 +9,7 @@ import {
   RegisterParams,
   UserResponse,
   RegisterUserResponse,
+  UserQueryParams,
 } from '@/utils/definitions';
 
 const instance = axios.create({
@@ -67,13 +68,17 @@ export const registerUser = async (
 };
 
 export const getUserByEventId = async (
-  eventId: string
+  eventId: string,
+  params?: UserQueryParams
 ): Promise<ResponseList<UserResponse>> => {
   try {
     const { data } = await instance.get<ResponseList<UserResponse>>(
-      `/users/event/${eventId}`
+      `/users/event/${eventId}`,
+      {
+        params,
+      }
     );
-    console.log('Fetched book details successfully:');
+    console.log('Fetched event details successfully:');
     return data;
   } catch (error: unknown) {
     handleError(error);

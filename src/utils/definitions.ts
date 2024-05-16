@@ -24,6 +24,12 @@ export interface EventsParams {
   limit?: number;
 }
 
+export interface UserQueryParams {
+  page?: number;
+  limit?: number;
+  filterQuery?: string;
+}
+
 export interface RegisterParams {
   name: string;
   email: string;
