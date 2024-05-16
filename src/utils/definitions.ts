@@ -16,9 +16,8 @@ export interface ResponseList<T> {
 }
 
 export interface EventsParams {
-  title?: string;
   category?: string;
-  country?: string;
+  filterQuery?: string;
   date?: string;
   page?: number;
   limit?: number;
