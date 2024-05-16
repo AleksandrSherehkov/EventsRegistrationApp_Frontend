@@ -2,10 +2,15 @@
 
 import { Input } from '@nextui-org/react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { FC, useCallback, useEffect, useMemo, useState } from 'react';
 import debounce from 'lodash.debounce';
 
-export const SearchBar = () => {
+interface SearchBarProps {
+  label: string;
+  placeholder: string;
+}
+
+export const SearchBar: FC<SearchBarProps> = ({ label, placeholder }) => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const filterQuery = searchParams.get('filterQuery') ?? '';
@@ -38,15 +43,16 @@ export const SearchBar = () => {
   }, [inputValue, debouncedUpdateQueryParams]);
 
   return (
-    <div className="flex w-full pl-10">
-      <div className="justify-center max-w-[240px]">
+    <div className="flex min-w-[300px] ">
+      <div className="justify-center w-[300px]">
         <Input
           className="dark"
           type="text"
-          label="Search by name or email"
+          label={label}
+          description="The country code in ISO 3166-1 alpha-2 format. E.g. AU,NZ,US,CA..."
           radius="full"
           size="sm"
-          placeholder="Enter your name or email"
+          placeholder={placeholder}
           value={inputValue}
           onChange={e => setInputValue(e.target.value)}
           variant="underlined"

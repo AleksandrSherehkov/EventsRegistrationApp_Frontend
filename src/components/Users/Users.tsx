@@ -25,7 +25,10 @@ export const Users: FC<UsersProps> = async ({ eventId, searchParams }) => {
     <>
       <Title text="Registered users for" span="the event" />
       <EventDetails eventDetails={eventDetails} />
-      <SearchBar />
+      <SearchBar
+        label="Search by name or email"
+        placeholder="Enter your name or email"
+      />
       <ul className="flex flex-wrap justify-center gap-3 w-full h-max mx-auto rounded-[30px]  p-5    ">
         {users.data.map(user => (
           <UserCard key={user._id} user={user} />

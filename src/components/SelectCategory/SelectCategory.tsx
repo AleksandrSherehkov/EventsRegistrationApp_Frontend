@@ -13,7 +13,6 @@ export const SelectCategory = () => {
     new Set(categoryQuery ? [categoryQuery] : [])
   );
 
-  console.log(`value:`, value);
   const updateQueryParams = useCallback(
     (value: string) => {
       const params = new URLSearchParams(searchParams.toString());
@@ -42,7 +41,7 @@ export const SelectCategory = () => {
   }, [value, debouncedUpdateQueryParams]);
 
   return (
-    <div className="flex w-full gap-2 justify-end mb-4">
+    <div className="flex min-w-[177px] gap-2  mb-4">
       <Select
         label="Category of Event"
         variant="underlined"
@@ -53,8 +52,8 @@ export const SelectCategory = () => {
         classNames={{
           label: '',
           base: '',
-          mainWrapper: '',
-          trigger: 'text-default-700',
+          mainWrapper: ' ',
+          trigger: 'text-default-700 ',
           innerWrapper: '',
           listboxWrapper: '',
           listbox: '',
