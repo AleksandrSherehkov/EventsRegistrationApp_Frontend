@@ -1,1 +1,2 @@
-export const emailValidator = /^\w+@[a-zA-Z_]+?.[a-zA-Z]{2,3}$/;
+export const emailValidator =
+  /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;

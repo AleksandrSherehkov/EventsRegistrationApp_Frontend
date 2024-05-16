@@ -32,6 +32,11 @@ export interface RegisterParams {
   eventId: string;
 }
 
+export interface RegisterUserResponse {
+  success: boolean;
+  data: UserResponse | string;
+}
+
 export interface UserResponse {
   _id: string;
   name: string;

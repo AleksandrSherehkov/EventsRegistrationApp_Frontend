@@ -8,6 +8,7 @@ import {
   EventsParams,
   RegisterParams,
   UserResponse,
+  RegisterUserResponse,
 } from '@/utils/definitions';
 
 const instance = axios.create({
@@ -32,7 +33,9 @@ export const getEvents = async (
   }
 };
 
-export const registerUser = async (params: RegisterParams) => {
+export const registerUser = async (
+  params: RegisterParams
+): Promise<RegisterUserResponse> => {
   try {
     const { data } = await instance.post<UserResponse>('/users', params);
 
@@ -65,12 +68,23 @@ export const registerUser = async (params: RegisterParams) => {
 
 export const getUserByEventId = async (
   eventId: string
-): Promise<UserResponse> => {
+): Promise<ResponseList<UserResponse>> => {
   try {
-    const { data } = await instance.get<UserResponse>(
+    const { data } = await instance.get<ResponseList<UserResponse>>(
       `/users/event/${eventId}`
     );
     console.log('Fetched book details successfully:');
+    return data;
+  } catch (error: unknown) {
+    handleError(error);
+    throw error;
+  }
+};
+
+export const getEventId = async (eventId: string): Promise<EventResponse> => {
+  try {
+    const { data } = await instance.get<EventResponse>(`/events/${eventId}`);
+    console.log('Fetched event details successfully:');
     return data;
   } catch (error: unknown) {
     handleError(error);

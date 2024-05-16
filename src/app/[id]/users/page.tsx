@@ -8,7 +8,11 @@ interface PageUsersProps {
 }
 
 const PageUsers: FC<PageUsersProps> = ({ params }) => {
-  return <Users idEvent={params.id} />;
+  return (
+    <main className="   min-h-screen max-w-7xl  mx-auto ">
+      <Users eventId={params.id} />
+    </main>
+  );
 };
 
 export default PageUsers;
