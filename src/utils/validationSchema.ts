@@ -1,4 +1,4 @@
-import { emailValidator } from '@/constants/regexp';
+import { EMAIL_REGEX, FULL_NAME_REGEX } from '@/constants/regexp';
 import { z } from 'zod';
 
 import { parse, isDate, isBefore, isAfter, subYears } from 'date-fns';
@@ -14,14 +14,15 @@ export const fullNameZodSchema = z
   .string({ required_error: '*Full name is required' })
   .min(1, { message: '*Full name is required' })
   .transform(value => value.trim())
-  .refine(value => value.split(' ').length > 1, {
-    message: '*Full name must contain at least two words',
+  .refine(value => FULL_NAME_REGEX.test(value), {
+    message:
+      '*Full name can only contain letters and spaces, and must contain at least two words',
   });
 
 export const emailZodShema = z
   .string({ required_error: '*Email is required' })
   .min(1, { message: '*Email is required' })
-  .regex(emailValidator, {
+  .regex(EMAIL_REGEX, {
     message: '*Please enter a valid email address"',
   });
 
