@@ -23,10 +23,12 @@ export const Users: FC<UsersProps> = ({ eventId }) => {
   const [eventDetails, setEventDetails] = useState<EventResponse | null>(null);
   const [users, setUsers] = useState<UserResponse[]>([]);
   const [search, setSearch] = useState('');
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
+        setLoading(true);
         const params: UserQueryParams = {
           filterQuery: search,
         };
@@ -43,6 +45,8 @@ export const Users: FC<UsersProps> = ({ eventId }) => {
         setUsers(users.data);
       } catch (error) {
         console.error('Failed to fetch users:', error);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -54,7 +58,9 @@ export const Users: FC<UsersProps> = ({ eventId }) => {
       <Title text="Registered users for" span="the event" />
       <div className="flex justify-between flex-col md:flex-row">
         <BackButton />
-        {eventDetails ? (
+        {loading ? (
+          <DetailsEventSkeleton />
+        ) : eventDetails ? (
           <EventDetails eventDetails={eventDetails} />
         ) : (
           <DetailsEventSkeleton />
@@ -67,14 +73,18 @@ export const Users: FC<UsersProps> = ({ eventId }) => {
         onChange={setSearch}
         reset={false}
       />
-      {users.length ? (
+      {loading ? (
+        <UserCardSkeleton />
+      ) : users.length ? (
         <ul className="flex flex-wrap justify-center gap-3 w-full h-max mx-auto  p-5">
           {users.map(user => (
             <UserCard key={user._id} user={user} />
           ))}
         </ul>
       ) : (
-        <UserCardSkeleton />
+        <p className="text-fogWhiteHover text-2xl md:text-3xl text-center">
+          No registered users yet
+        </p>
       )}
     </>
   );
