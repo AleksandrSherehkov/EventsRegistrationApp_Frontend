@@ -4,7 +4,11 @@ import { FC } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Button } from '@nextui-org/react';
 
-export const ResetButton: FC = () => {
+interface ResetButtonProps {
+  onReset: () => void;
+}
+
+export const ResetButton: FC<ResetButtonProps> = ({ onReset }) => {
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -14,6 +18,8 @@ export const ResetButton: FC = () => {
     params.delete('date');
     params.delete('category');
     router.replace(`?${params.toString()}`);
+    onReset();
+    setTimeout(() => onReset(), 0);
   };
 
   return (

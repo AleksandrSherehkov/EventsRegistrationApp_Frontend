@@ -1,61 +1,51 @@
 'use client';
-import React, { useState, useEffect } from 'react';
-import { Select, SelectItem, Selection } from '@nextui-org/react';
+import React, { FC, useEffect, useState } from 'react';
+import { Select, SelectItem } from '@nextui-org/react';
 import { useSearchParams } from 'next/navigation';
-
 import { useUpdateSelectQueryParams } from '@/hooks/useUpdateSelectQueryParams';
-
 import { eventsOptions } from './data';
 
-export const SelectCategory = () => {
+interface SelectCategoryProps {
+  reset: boolean;
+}
+
+export const SelectCategory: FC<SelectCategoryProps> = ({ reset }) => {
   const searchParams = useSearchParams();
-  const categoryQuery = searchParams.get('category') ?? '';
-  const [value, setValue] = useState<Selection>(
-    new Set(categoryQuery ? [categoryQuery] : [])
+  const filterCategory = searchParams.get('category') ?? '';
+  const [selectedValue, setSelectedValue] = useState<string | null>(
+    filterCategory
   );
 
-  useEffect(() => {
-    setValue(new Set(categoryQuery ? [categoryQuery] : []));
-  }, [categoryQuery]);
-
+  console.log(`selectedValue:`, selectedValue);
   const updateQueryParams = useUpdateSelectQueryParams();
 
   useEffect(() => {
-    const selectedValue = Array.from(value).join('');
-    updateQueryParams(selectedValue);
-  }, [value, updateQueryParams]);
+    if (reset) setSelectedValue(null);
+  }, [reset]);
+
+  useEffect(() => {
+    updateQueryParams(selectedValue ?? '');
+  }, [selectedValue, updateQueryParams]);
 
   return (
-    <div className="flex min-w-[177px] gap-2 mb-4">
-      <Select
-        label="Category of Event"
-        variant="underlined"
-        placeholder="Select a Category"
-        selectedKeys={value}
-        className="dark max-w-44"
-        onSelectionChange={keys => {
-          setValue(keys);
-          const selectedValue = Array.from(keys).join('');
-          updateQueryParams(selectedValue);
-        }}
-        classNames={{
-          label: '',
-          base: '',
-          mainWrapper: ' ',
-          trigger: 'text-default-700 ',
-          innerWrapper: '',
-          listboxWrapper: '',
-          listbox: '',
-          value: '',
-          popoverContent: 'bg-mediumGrey text-default-300',
-        }}
-      >
-        {eventsOptions.map(({ value, label }) => (
-          <SelectItem key={value} value={value}>
-            {label}
-          </SelectItem>
-        ))}
-      </Select>
-    </div>
+    <Select
+      items={eventsOptions}
+      variant="underlined"
+      label="Category of Event"
+      placeholder="Select a Category"
+      className="max-w-xs dark"
+      classNames={{
+        trigger: 'text-default-700 ',
+        popoverContent: 'bg-mediumGrey text-default-300',
+      }}
+      selectedKeys={selectedValue ? [selectedValue] : []}
+      onSelectionChange={keys =>
+        setSelectedValue(Array.from(keys)[0] as string)
+      }
+    >
+      {eventsOption => (
+        <SelectItem key={eventsOption.value}>{eventsOption.label}</SelectItem>
+      )}
+    </Select>
   );
 };

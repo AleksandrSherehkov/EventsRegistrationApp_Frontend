@@ -26,7 +26,7 @@ export const getEvents = async (
         params,
       }
     );
-    console.log(`data:`, data);
+
     return data;
   } catch (error: unknown) {
     handleError(error);

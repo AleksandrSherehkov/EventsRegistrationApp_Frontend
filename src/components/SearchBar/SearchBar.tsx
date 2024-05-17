@@ -10,16 +10,19 @@ interface SearchBarProps {
   label: string;
   placeholder: string;
   description?: string;
+  reset: boolean;
 }
 
 export const SearchBar: FC<SearchBarProps> = ({
   label,
   placeholder,
   description,
+  reset,
 }) => {
   const searchParams = useSearchParams();
   const filterQuery = searchParams.get('filterQuery') ?? '';
   const [inputValue, setInputValue] = useState(filterQuery);
+  console.log(`inputValue:`, inputValue);
 
   const updateQueryParams = useUpdateSearchBarQueryParams();
 
@@ -27,6 +30,10 @@ export const SearchBar: FC<SearchBarProps> = ({
     () => debounce(updateQueryParams, 300),
     [updateQueryParams]
   );
+
+  useEffect(() => {
+    if (reset) setInputValue('');
+  }, [reset]);
 
   useEffect(() => {
     debouncedUpdateQueryParams(inputValue);
@@ -37,7 +44,7 @@ export const SearchBar: FC<SearchBarProps> = ({
   }, [inputValue, debouncedUpdateQueryParams]);
 
   return (
-    <div className=" w-max pl-10">
+    <div className="w-max pl-10">
       <Input
         className="dark w-[300px]"
         type="text"
