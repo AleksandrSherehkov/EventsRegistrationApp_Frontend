@@ -1,6 +1,6 @@
+import React, { FC } from 'react';
 import { EventResponse } from '@/utils/definitions';
 import { formatDate } from '@/utils/formatDate';
-import React, { FC } from 'react';
 
 interface EventDetailsProps {
   eventDetails: EventResponse;

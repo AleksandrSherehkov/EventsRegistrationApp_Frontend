@@ -1,50 +1,18 @@
 'use client';
-import React, { useState, useEffect, useCallback, useMemo } from 'react';
-import { format } from 'date-fns';
-import { toZonedTime } from 'date-fns-tz';
-import debounce from 'lodash.debounce';
-import { useRouter, useSearchParams } from 'next/navigation';
-
+import React, { useState, useEffect } from 'react';
 import { DatePicker } from '@nextui-org/react';
-import { DateValue, getLocalTimeZone } from '@internationalized/date';
+import { DateValue } from '@internationalized/date';
+
+import { toISOStringWithDateFns } from '@/utils/formatDate';
+import { useUpdateDatePickerQueryParams } from '@/hooks/useUpdateDatePickerQueryParams';
 
 export const DataPicker = () => {
   const [value, setValue] = useState<DateValue | null>(null);
-  const router = useRouter();
-  const searchParams = useSearchParams();
-
-  const toISOStringWithDateFns = (dateValue: DateValue) => {
-    if (!dateValue) return 'No date selected';
-    const date = dateValue.toDate(getLocalTimeZone());
-    const zonedDate = toZonedTime(date, 'UTC');
-    return format(zonedDate, "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
-  };
-
-  const updateQueryParams = useCallback(
-    (dateValue: DateValue | null) => {
-      const params = new URLSearchParams(searchParams.toString());
-      if (dateValue) {
-        params.set('date', toISOStringWithDateFns(dateValue));
-      } else {
-        params.delete('date');
-      }
-      router.replace(`?${params.toString()}`);
-    },
-    [searchParams, router]
-  );
-
-  const debouncedUpdateQueryParams = useMemo(
-    () => debounce(updateQueryParams, 300),
-    [updateQueryParams]
-  );
+  const updateQueryParams = useUpdateDatePickerQueryParams();
 
   useEffect(() => {
-    debouncedUpdateQueryParams(value);
-
-    return () => {
-      debouncedUpdateQueryParams.cancel();
-    };
-  }, [value, debouncedUpdateQueryParams]);
+    updateQueryParams(value);
+  }, [value, updateQueryParams]);
 
   console.log(
     `value:`,
@@ -58,7 +26,10 @@ export const DataPicker = () => {
         label="Search date"
         variant="underlined"
         value={value}
-        onChange={setValue}
+        onChange={newValue => {
+          setValue(newValue);
+          updateQueryParams(newValue);
+        }}
         classNames={{
           base: '',
           selectorButton: '',

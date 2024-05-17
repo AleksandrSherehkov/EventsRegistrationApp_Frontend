@@ -17,10 +17,8 @@ export const ResetButton: FC = () => {
   };
 
   return (
-    <div className="w-full flex justify-center">
-      <Button size="lg" color="primary" variant="light" onClick={handleReset}>
-        Reset
-      </Button>
-    </div>
+    <Button size="lg" color="primary" variant="light" onClick={handleReset}>
+      Reset
+    </Button>
   );
 };

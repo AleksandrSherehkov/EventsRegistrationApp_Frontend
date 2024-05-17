@@ -1,16 +1,17 @@
 'use client';
 
 import React, { FC } from 'react';
-
 import { useFormState, useFormStatus } from 'react-dom';
+import { Radio, RadioGroup } from '@nextui-org/react';
+
 import { useEmailValidation } from '@/hooks/useEmailValidation';
-import { InputForm } from '../InputForm/InputForm';
-import { LinkCustom } from '../LinkCustom/LinkCustom';
 import { useNameValidation } from '@/hooks/useNameValidation';
 import { useBirthDateValidation } from '@/hooks/useBirthDateValidation';
-import { ButtonAuth } from '../Button/Button';
-import { Radio, RadioGroup } from '@nextui-org/react';
 import { registerEventUser } from '@/services/actions';
+
+import { InputForm } from '../InputForm/InputForm';
+import { LinkCustom } from '../LinkCustom/LinkCustom';
+import { ButtonAuth } from '../Button/Button';
 import { Title } from '../Title/Title';
 
 interface RegisterProps {

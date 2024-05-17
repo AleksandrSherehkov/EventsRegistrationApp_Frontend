@@ -1,6 +1,6 @@
+import React, { FC } from 'react';
 import { UserResponse } from '@/utils/definitions';
 import { User } from '@nextui-org/react';
-import React, { FC } from 'react';
 
 type UserCardProps = {
   user: UserResponse;

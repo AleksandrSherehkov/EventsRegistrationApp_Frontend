@@ -10,10 +10,8 @@ export const BackButton = () => {
   };
 
   return (
-    <div>
-      <Button size="lg" color="primary" variant="light" onClick={handleBack}>
-        Back
-      </Button>
-    </div>
+    <Button size="lg" color="primary" variant="light" onClick={handleBack}>
+      Back to Events
+    </Button>
   );
 };

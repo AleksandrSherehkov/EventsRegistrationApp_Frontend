@@ -1,49 +1,29 @@
 'use client';
-import React, { useState, useCallback, useEffect, useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Select, SelectItem, Selection } from '@nextui-org/react';
-import { useRouter, useSearchParams } from 'next/navigation';
-import debounce from 'lodash.debounce';
+import { useSearchParams } from 'next/navigation';
+
+import { useUpdateSelectQueryParams } from '@/hooks/useUpdateSelectQueryParams';
+
 import { eventsOptions } from './data';
 
 export const SelectCategory = () => {
-  const router = useRouter();
   const searchParams = useSearchParams();
   const categoryQuery = searchParams.get('category') ?? '';
   const [value, setValue] = useState<Selection>(
     new Set(categoryQuery ? [categoryQuery] : [])
   );
 
-  // Synchronize state with URL parameters
   useEffect(() => {
     setValue(new Set(categoryQuery ? [categoryQuery] : []));
   }, [categoryQuery]);
 
-  const updateQueryParams = useCallback(
-    (value: string) => {
-      const params = new URLSearchParams(searchParams.toString());
-      if (value) {
-        params.set('category', value);
-      } else {
-        params.delete('category');
-      }
-      router.replace(`?${params.toString()}`);
-    },
-    [searchParams, router]
-  );
-
-  const debouncedUpdateQueryParams = useMemo(
-    () => debounce(updateQueryParams, 300),
-    [updateQueryParams]
-  );
+  const updateQueryParams = useUpdateSelectQueryParams();
 
   useEffect(() => {
     const selectedValue = Array.from(value).join('');
-    debouncedUpdateQueryParams(selectedValue);
-
-    return () => {
-      debouncedUpdateQueryParams.cancel();
-    };
-  }, [value, debouncedUpdateQueryParams]);
+    updateQueryParams(selectedValue);
+  }, [value, updateQueryParams]);
 
   return (
     <div className="flex min-w-[177px] gap-2 mb-4">
@@ -53,7 +33,11 @@ export const SelectCategory = () => {
         placeholder="Select a Category"
         selectedKeys={value}
         className="dark max-w-44"
-        onSelectionChange={setValue}
+        onSelectionChange={keys => {
+          setValue(keys);
+          const selectedValue = Array.from(keys).join('');
+          updateQueryParams(selectedValue);
+        }}
         classNames={{
           label: '',
           base: '',

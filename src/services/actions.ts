@@ -1,6 +1,6 @@
 'use server';
 
-import { RegisterParams, UserResponse } from '@/utils/definitions';
+import { RegisterParams } from '@/utils/definitions';
 import { registerUser } from './api';
 
 export const registerEventUser = async (
