@@ -2,6 +2,7 @@
 
 import { FC, useState, useEffect, useCallback } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
+import { Card, Skeleton } from '@nextui-org/react';
 import { getEvents } from '@/services/api';
 import { EventResponse, EventsParams } from '@/utils/definitions';
 
@@ -11,6 +12,7 @@ import { SelectCategory } from '../SelectCategory/SelectCategory';
 import { SearchBar } from '../SearchBar/SearchBar';
 import { DataPicker } from '../DataPicker/DataPicker';
 import { ResetButton } from '../ResetButton/ResetButton';
+import { CardSkeleton } from '../Skeleton/Skeleton';
 
 interface EventsProps {
   initialParams?: EventsParams;
@@ -91,7 +93,7 @@ export const Events: FC<EventsProps> = () => {
         dataLength={events.length}
         next={loadMoreEvents}
         hasMore={hasMore}
-        loader={<h4>Loading...</h4>}
+        loader={<CardSkeleton />}
         endMessage={
           <p className="text-fogWhiteHover text-2xl md:text-3xl ">
             No more events to show
