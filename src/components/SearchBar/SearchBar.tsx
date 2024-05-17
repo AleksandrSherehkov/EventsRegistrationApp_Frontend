@@ -3,14 +3,13 @@
 import { Input } from '@nextui-org/react';
 import { FC, useEffect, useMemo, useState } from 'react';
 import debounce from 'lodash.debounce';
-import { useSearchParams } from 'next/navigation';
-import { useUpdateSearchBarQueryParams } from '@/hooks/useUpdateSearchBarQueryParams';
 
 interface SearchBarProps {
   label: string;
   placeholder: string;
   description?: string;
   reset: boolean;
+  onChange: (value: string) => void;
 }
 
 export const SearchBar: FC<SearchBarProps> = ({
@@ -18,30 +17,25 @@ export const SearchBar: FC<SearchBarProps> = ({
   placeholder,
   description,
   reset,
+  onChange = () => {},
 }) => {
-  const searchParams = useSearchParams();
-  const filterQuery = searchParams.get('filterQuery') ?? '';
-  const [inputValue, setInputValue] = useState(filterQuery);
-  console.log(`inputValue:`, inputValue);
+  const [inputValue, setInputValue] = useState('');
 
-  const updateQueryParams = useUpdateSearchBarQueryParams();
-
-  const debouncedUpdateQueryParams = useMemo(
-    () => debounce(updateQueryParams, 300),
-    [updateQueryParams]
-  );
+  const debouncedOnChange = useMemo(() => debounce(onChange, 300), [onChange]);
 
   useEffect(() => {
     if (reset) setInputValue('');
   }, [reset]);
 
   useEffect(() => {
-    debouncedUpdateQueryParams(inputValue);
+    if (debouncedOnChange) {
+      debouncedOnChange(inputValue);
 
-    return () => {
-      debouncedUpdateQueryParams.cancel();
-    };
-  }, [inputValue, debouncedUpdateQueryParams]);
+      return () => {
+        debouncedOnChange.cancel();
+      };
+    }
+  }, [inputValue, debouncedOnChange]);
 
   return (
     <div className="w-max pl-10">

@@ -16,9 +16,9 @@ export interface ResponseList<T> {
 }
 
 export interface EventsParams {
-  category?: string;
+  category?: string | null;
   filterQuery?: string;
-  date?: string;
+  date?: string | null;
   page?: number;
   limit?: number;
 }

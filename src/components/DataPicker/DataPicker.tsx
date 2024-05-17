@@ -2,26 +2,23 @@
 import React, { useState, useEffect, FC } from 'react';
 import { DatePicker } from '@nextui-org/react';
 import { DateValue } from '@internationalized/date';
-
 import { toISOStringWithDateFns } from '@/utils/formatDate';
-import { useUpdateDatePickerQueryParams } from '@/hooks/useUpdateDatePickerQueryParams';
 
 interface DataPickerProps {
   reset: boolean;
+  onChange: (date: string | null) => void;
 }
 
-export const DataPicker: FC<DataPickerProps> = ({ reset }) => {
+export const DataPicker: FC<DataPickerProps> = ({ reset, onChange }) => {
   const [value, setValue] = useState<DateValue | null>(null);
-  console.log(`value:`, value);
-  const updateQueryParams = useUpdateDatePickerQueryParams();
 
   useEffect(() => {
     if (reset) setValue(null);
   }, [reset]);
 
   useEffect(() => {
-    updateQueryParams(value);
-  }, [value, updateQueryParams]);
+    onChange(value ? toISOStringWithDateFns(value) : null);
+  }, [value, onChange]);
 
   return (
     <div className="flex w-[284px] flex-col gap-y-2">
@@ -32,7 +29,7 @@ export const DataPicker: FC<DataPickerProps> = ({ reset }) => {
         value={value}
         onChange={newValue => {
           setValue(newValue);
-          updateQueryParams(newValue);
+          onChange(newValue ? toISOStringWithDateFns(newValue) : null);
         }}
         classNames={{
           base: '',

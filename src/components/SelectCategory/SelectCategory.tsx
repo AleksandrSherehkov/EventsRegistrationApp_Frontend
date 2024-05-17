@@ -1,31 +1,26 @@
 'use client';
 import React, { FC, useEffect, useState } from 'react';
 import { Select, SelectItem } from '@nextui-org/react';
-import { useSearchParams } from 'next/navigation';
-import { useUpdateSelectQueryParams } from '@/hooks/useUpdateSelectQueryParams';
 import { eventsOptions } from './data';
 
 interface SelectCategoryProps {
   reset: boolean;
+  onChange: (value: string | null) => void;
 }
 
-export const SelectCategory: FC<SelectCategoryProps> = ({ reset }) => {
-  const searchParams = useSearchParams();
-  const filterCategory = searchParams.get('category') ?? '';
-  const [selectedValue, setSelectedValue] = useState<string | null>(
-    filterCategory
-  );
-
-  console.log(`selectedValue:`, selectedValue);
-  const updateQueryParams = useUpdateSelectQueryParams();
+export const SelectCategory: FC<SelectCategoryProps> = ({
+  reset,
+  onChange,
+}) => {
+  const [selectedValue, setSelectedValue] = useState<string>('');
 
   useEffect(() => {
-    if (reset) setSelectedValue(null);
+    if (reset) setSelectedValue('');
   }, [reset]);
 
   useEffect(() => {
-    updateQueryParams(selectedValue ?? '');
-  }, [selectedValue, updateQueryParams]);
+    onChange(selectedValue);
+  }, [selectedValue, onChange]);
 
   return (
     <Select
