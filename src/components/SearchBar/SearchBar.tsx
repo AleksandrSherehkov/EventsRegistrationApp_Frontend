@@ -8,9 +8,14 @@ import debounce from 'lodash.debounce';
 interface SearchBarProps {
   label: string;
   placeholder: string;
+  description?: string;
 }
 
-export const SearchBar: FC<SearchBarProps> = ({ label, placeholder }) => {
+export const SearchBar: FC<SearchBarProps> = ({
+  label,
+  placeholder,
+  description,
+}) => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const filterQuery = searchParams.get('filterQuery') ?? '';
@@ -49,7 +54,7 @@ export const SearchBar: FC<SearchBarProps> = ({ label, placeholder }) => {
           className="dark"
           type="text"
           label={label}
-          description="The country code in ISO 3166-1 alpha-2 format. E.g. AU,NZ,US,CA..."
+          description={description}
           radius="full"
           size="sm"
           placeholder={placeholder}

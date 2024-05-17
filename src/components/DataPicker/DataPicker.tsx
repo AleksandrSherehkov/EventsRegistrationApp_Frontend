@@ -60,12 +60,12 @@ export const DataPicker = () => {
         value={value}
         onChange={setValue}
         classNames={{
-          base: '  ',
+          base: '',
           selectorButton: '',
           selectorIcon: ' ',
           popoverContent: '',
-          calendar: 'bg-mediumGrey ',
-          calendarContent: 'bg-mediumGrey ',
+          calendar: 'bg-darkGrey ',
+          calendarContent: 'bg-fogWhiteHover  ',
           timeInputLabel: ' ',
           timeInput: '',
         }}

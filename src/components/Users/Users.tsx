@@ -6,6 +6,7 @@ import { notFound } from 'next/navigation';
 import { EventDetails } from '../EventDetails/EventDetails';
 import { UserCard } from '../UserCard/UserCard';
 import { SearchBar } from '../SearchBar/SearchBar';
+import { BackButton } from '../BackButton/BackButton';
 
 interface UsersProps {
   eventId: string;
@@ -24,7 +25,11 @@ export const Users: FC<UsersProps> = async ({ eventId, searchParams }) => {
   return (
     <>
       <Title text="Registered users for" span="the event" />
-      <EventDetails eventDetails={eventDetails} />
+      <div className="flex justify-between">
+        <BackButton />
+        <EventDetails eventDetails={eventDetails} />
+      </div>
+
       <SearchBar
         label="Search by name or email"
         placeholder="Enter your name or email"

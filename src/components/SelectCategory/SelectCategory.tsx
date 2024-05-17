@@ -13,6 +13,11 @@ export const SelectCategory = () => {
     new Set(categoryQuery ? [categoryQuery] : [])
   );
 
+  // Synchronize state with URL parameters
+  useEffect(() => {
+    setValue(new Set(categoryQuery ? [categoryQuery] : []));
+  }, [categoryQuery]);
+
   const updateQueryParams = useCallback(
     (value: string) => {
       const params = new URLSearchParams(searchParams.toString());
@@ -41,7 +46,7 @@ export const SelectCategory = () => {
   }, [value, debouncedUpdateQueryParams]);
 
   return (
-    <div className="flex min-w-[177px] gap-2  mb-4">
+    <div className="flex min-w-[177px] gap-2 mb-4">
       <Select
         label="Category of Event"
         variant="underlined"
