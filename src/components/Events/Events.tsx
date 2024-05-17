@@ -75,7 +75,7 @@ export const Events: FC<EventsProps> = () => {
   return (
     <>
       <Title text="Find your" span="events..." />
-      <div className="gap-4 md:gap-10 w-full flex  flex-col justify-center items-center  xl:flex-row xl:gap-20  ">
+      <div className="gap-4 md:gap-10 w-full flex  flex-col justify-center items-center md:items-start xl:flex-row xl:gap-20  ">
         <SearchBar
           label="Search by title Events or Country"
           placeholder="Enter query"
