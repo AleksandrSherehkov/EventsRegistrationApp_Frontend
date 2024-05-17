@@ -1,6 +1,6 @@
+import { FC } from 'react';
 import { Events } from '@/components/Events/Events';
 import { EventsParams } from '@/utils/definitions';
-import { FC } from 'react';
 
 interface HomePageProps {
   searchParams: EventsParams;

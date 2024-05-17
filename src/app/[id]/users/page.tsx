@@ -1,6 +1,7 @@
+import React, { FC } from 'react';
+
 import { Users } from '@/components/Users/Users';
 import { UserQueryParams } from '@/utils/definitions';
-import React, { FC } from 'react';
 
 interface PageUsersProps {
   params: {
