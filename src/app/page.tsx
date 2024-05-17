@@ -1,15 +1,10 @@
 import { FC } from 'react';
 import { Events } from '@/components/Events/Events';
-import { EventsParams } from '@/utils/definitions';
 
-interface HomePageProps {
-  searchParams: EventsParams;
-}
-
-const HomePage: FC<HomePageProps> = ({ searchParams }) => {
+const HomePage: FC = () => {
   return (
     <main className="flex flex-col items-center  min-h-screen max-w-7xl  mx-auto ">
-      <Events searchParams={searchParams} />
+      <Events />
     </main>
   );
 };

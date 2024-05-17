@@ -28,7 +28,7 @@ export const SelectCategory: FC<SelectCategoryProps> = ({
       variant="underlined"
       label="Category of Event"
       placeholder="Select a Category"
-      className="max-w-xs dark"
+      className="max-w-[284px] dark"
       classNames={{
         trigger: 'text-default-700 ',
         popoverContent: 'bg-mediumGrey text-default-300',

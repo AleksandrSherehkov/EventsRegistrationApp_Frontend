@@ -38,9 +38,9 @@ export const SearchBar: FC<SearchBarProps> = ({
   }, [inputValue, debouncedOnChange]);
 
   return (
-    <div className="w-max pl-10">
+    <div className="w-max ">
       <Input
-        className="dark w-[300px]"
+        className="dark w-[284px]"
         type="text"
         label={label}
         description={description}

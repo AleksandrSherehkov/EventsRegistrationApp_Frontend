@@ -16,7 +16,7 @@ interface EventCardProps {
 }
 export const EventCard: FC<EventCardProps> = ({ event }) => {
   return (
-    <Card as="li" key={event._id} className="dark w-[400px] ">
+    <Card as="li" key={event._id} className="dark w-[340px] ">
       <CardHeader className="flex gap-3">
         <div className="flex flex-col">
           <p className="h-12 text-base text-slate-500 font-semibold">

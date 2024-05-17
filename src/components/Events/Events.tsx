@@ -75,7 +75,7 @@ export const Events: FC<EventsProps> = () => {
   return (
     <>
       <Title text="Find your" span="events..." />
-      <div className="gap-4 md:gap-10 w-full flex flex-wrap justify-between">
+      <div className="gap-4 md:gap-10 w-full flex  flex-col justify-center items-center  xl:flex-row xl:gap-20  ">
         <SearchBar
           label="Search by title Events or Country"
           placeholder="Enter query"
@@ -92,8 +92,12 @@ export const Events: FC<EventsProps> = () => {
         next={loadMoreEvents}
         hasMore={hasMore}
         loader={<h4>Loading...</h4>}
-        endMessage={<p className="text-red">No more events to show</p>}
-        className="mt-5 w-full flex justify-center items-center flex-wrap gap-4"
+        endMessage={
+          <p className="text-fogWhiteHover text-2xl md:text-3xl ">
+            No more events to show
+          </p>
+        }
+        className="h-screen w-full flex justify-center items-center flex-wrap gap-4"
       >
         {events.map((event: EventResponse) => (
           <EventCard key={event._id} event={event} />
