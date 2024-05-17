@@ -43,14 +43,12 @@ export const EventCard: FC<EventCardProps> = ({ event }) => {
       </CardBody>
       <Divider />
       <CardFooter className="flex w-full justify-around items-center gap-8">
-        <Link href={`/${event._id}/register`}>Register</Link>
-        <Link href={`/${event._id}/users`}>View</Link>
-        {/* <Link isBlock href={`/${event._id}/register`}>
+        <Link isBlock href={`/${event._id}/register`}>
           Register
         </Link>
         <Link isBlock href={`/${event._id}/users`}>
           View
-        </Link> */}
+        </Link>
       </CardFooter>
     </Card>
   );
