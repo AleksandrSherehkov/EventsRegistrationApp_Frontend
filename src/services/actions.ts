@@ -4,9 +4,9 @@ import { RegisterParams } from '@/utils/definitions';
 import { registerUser } from './api';
 
 export const registerEventUser = async (
-  _state: void | undefined,
+  prevState: string | undefined,
   formData: FormData
-) => {
+): Promise<string> => {
   const params: RegisterParams = {
     name: formData.get('name') as string,
     email: formData.get('email') as string,

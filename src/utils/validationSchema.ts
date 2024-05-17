@@ -1,4 +1,4 @@
-import { EMAIL_REGEX, FULL_NAME_REGEX } from '@/constants/regexp';
+import { DATE_REGEX, EMAIL_REGEX, FULL_NAME_REGEX } from '@/constants/regexp';
 import { z } from 'zod';
 
 import { parse, isDate, isBefore, isAfter, subYears } from 'date-fns';
@@ -31,10 +31,15 @@ export const birthDateZodSchema = z
   .transform(value => value.trim())
   .refine(
     value => {
+      if (!DATE_REGEX.test(value)) {
+        return false;
+      }
       const date = parse(value, 'dd-MM-yyyy', new Date());
       return isDate(date) && !isNaN(date.getTime());
     },
-    { message: '*Incorrect date format' }
+    {
+      message: '*Incorrect date format, please enter correct dd-MM-yyyy',
+    }
   )
   .refine(
     value => {
