@@ -1,69 +1,51 @@
-# Events Registration App
+# 🎉 Events Registration App
 
-## Overview
+## 📚 Overview
 
-Events Registration App is a web-based application designed for managing event
-registrations. This application offers three levels of complexity: base, middle,
-and advanced. While the base level is sufficient to pass the test task stage,
-accomplishing tasks with higher complexity will significantly increase your
-chances of getting into the school.
+Welcome to the **Events Registration App**! This web-based application is
+designed to make event registration seamless and efficient. Whether you're
+organizing a small meetup or a large conference, our app has got you covered.
 
-## Features
+## 🌟 Features
 
-### Base Level
-
-- **Events Board Page**: Displays a paginated list of available events.
-  - Event details include title, description, event date, and organizer.
-- **Event Registration Page**: Users can register for events through a form that
-  captures full name, email, date of birth, and how they heard about the event.
-- **Event Participants Page**: Shows a list of registered participants for an
+- **Events Board**: View a paginated list of available events with details like
+  title, description, date, and organizer.
+- **Registration**: Easily register for events with a simple form capturing your
+  full name, email, date of birth, and how you heard about the event.
+- **Participants List**: View the list of participants registered for each
   event.
-
-### Middle Level
-
-- All features from the base level.
-- **Sorting**: Sort events by title, event date, or organizer on the events
-  board page.
-- **Form Validation**: Implement validation on the event registration form.
-- **Search Participants**: Search for participants by full name or email on the
-  event participants page.
-
-### Advanced Level
-
-- All features from the middle level.
-- **Infinite Scroll**: Implement infinite scroll pagination on the events board
+- **Sorting**: Sort events by title, date, or organizer to quickly find what
+  you're looking for.
+- **Search**: Search for participants by name or email.
+- **Infinite Scroll**: Automatically load more events as you scroll down the
   page.
-- **Registration Statistics**: Display line/bar charts showing the number of
-  registrations per day for each event.
-- **Automated Event Fetching**: Implement a script that periodically fetches
-  events from a third-party API and stores them in the database.
+- **Statistics**: Visualize registration trends with charts showing the number
+  of registrations per day.
 
-## Technologies Used
+## 🛠️ Technologies Used
 
-- **Frontend**: Next.js, React, TypeScript, Tailwind CSS, NextUI
-- **Backend**: Node.js (with or without frameworks)
-- **Database**: Any relational or non-relational database
-- **Other Libraries**: Axios, clsx, date-fns, date-fns-tz, framer-motion,
-  lodash.debounce, react-icons, react-infinite-scroll-component, SWR,
-  tailwind-scrollbar, zod
+- **Next.js**: For server-side rendering and routing.
+- **React**: For building dynamic user interfaces.
+- **TypeScript**: For static typing and better developer experience.
+- **Tailwind CSS**: For rapid and responsive UI styling.
+- **NextUI**: For a beautiful component library.
+- **Axios**: For making HTTP requests.
+- **clsx**: For conditional classNames.
+- **date-fns & date-fns-tz**: For date manipulation.
+- **framer-motion**: For animations.
+- **lodash.debounce**: For debouncing functions.
+- **react-icons**: For using icons.
+- **react-infinite-scroll-component**: For infinite scrolling.
+- **SWR**: For data fetching.
+- **tailwind-scrollbar**: For custom scrollbars.
+- **zod**: For schema validation.
 
-## Requirements
-
-1. **Add instructions in the README.md file on how to run the application.**
-2. **Upload source code to GitHub/BitBucket/GitLab and share a link.**
-3. **Host the application in any preferable way and share the URL to access
-   it.**
-4. **Frontend**: Must be done in HTML/CSS/JavaScript (with or without any
-   framework), with any preferred design style.
-5. **Backend**: Can be done in NodeJS with or without any framework.
-6. **Database**: Use any relational or non-relational database.
-
-## Running the Application
+## 🚀 Getting Started
 
 ### Prerequisites
 
-- Node.js
-- npm or yarn
+- 🟢 Node.js
+- 🟢 npm or yarn
 
 ### Installation
 
@@ -119,22 +101,18 @@ chances of getting into the school.
 
    \`\`\`bash vercel \`\`\`
 
-## Hosting and URL
-
-- Ensure the application is hosted and accessible at the provided URL.
-
-## Contributing
+## 🤝 Contributing
 
 Feel free to contribute by submitting pull requests, reporting issues, or
 suggesting features.
 
-## License
+## 📜 License
 
 This project is licensed under the MIT License.
 
 ---
 
-### Contact
+### 📬 Contact
 
 For any inquiries, please contact:
 
@@ -142,4 +120,4 @@ For any inquiries, please contact:
 
 ---
 
-Thank you for using the Events Registration App!
+Thank you for using the Events Registration App! 🎉
