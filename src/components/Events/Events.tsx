@@ -2,7 +2,7 @@
 
 import { FC, useState, useEffect, useCallback } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import { Card, Skeleton } from '@nextui-org/react';
+
 import { getEvents } from '@/services/api';
 import { EventResponse, EventsParams } from '@/utils/definitions';
 

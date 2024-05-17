@@ -13,9 +13,11 @@ import { UserCard } from '../UserCard/UserCard';
 import { SearchBar } from '../SearchBar/SearchBar';
 import { BackButton } from '../BackButton/BackButton';
 
+import { DetailsEventSkeleton, UserCardSkeleton } from '../Skeleton/Skeleton';
+import { Card, Skeleton } from '@nextui-org/react';
+
 interface UsersProps {
   eventId: string;
-  searchParams?: UserQueryParams;
 }
 
 export const Users: FC<UsersProps> = ({ eventId }) => {
@@ -51,9 +53,13 @@ export const Users: FC<UsersProps> = ({ eventId }) => {
   return (
     <>
       <Title text="Registered users for" span="the event" />
-      <div className="flex justify-between">
+      <div className="flex justify-between flex-col md:flex-row">
         <BackButton />
-        {eventDetails && <EventDetails eventDetails={eventDetails} />}
+        {eventDetails ? (
+          <EventDetails eventDetails={eventDetails} />
+        ) : (
+          <DetailsEventSkeleton />
+        )}
       </div>
 
       <SearchBar
@@ -62,11 +68,15 @@ export const Users: FC<UsersProps> = ({ eventId }) => {
         onChange={setSearch}
         reset={false}
       />
-      <ul className="flex flex-wrap justify-center gap-3 w-full h-max mx-auto rounded-[30px] p-5">
-        {users.map(user => (
-          <UserCard key={user._id} user={user} />
-        ))}
-      </ul>
+      {users.length ? (
+        <ul className="flex flex-wrap justify-center gap-3 w-full h-max mx-auto  p-5">
+          {users.map(user => (
+            <UserCard key={user._id} user={user} />
+          ))}
+        </ul>
+      ) : (
+        <UserCardSkeleton />
+      )}
     </>
   );
 };

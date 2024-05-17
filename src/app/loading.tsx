@@ -1,4 +1,9 @@
+import { Spinner } from '@nextui-org/react';
+
 export default function Loading() {
-  // Or a custom loading skeleton component
-  return <p className="text-xl text-green-700">Loading...</p>;
+  return (
+    <main className="flex flex-col items-center justify-center  min-h-screen max-w-7xl  mx-auto ">
+      <Spinner label="Loading..." size="lg" />
+    </main>
+  );
 }

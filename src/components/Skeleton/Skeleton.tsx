@@ -38,3 +38,53 @@ export const CardSkeleton: FC = () => {
     </div>
   );
 };
+
+export const DetailsEventSkeleton: FC = () => {
+  return (
+    <Card
+      className="bg-fogGreyHover dark w-[519px] h-[164px] space-y-5 p-4"
+      radius="lg"
+    >
+      <Skeleton className=" h-8 rounded-lg">
+        <div className="h-8 rounded-lg bg-default-300"></div>
+      </Skeleton>
+      <div className="flex flex-col items-end space-y-3">
+        <Skeleton className="w-3/5 rounded-lg">
+          <div className="h-3 w-3/5 rounded-lg bg-default-200"></div>
+        </Skeleton>
+        <Skeleton className="w-3/5 rounded-lg">
+          <div className="h-3 w-3/5 rounded-lg bg-default-200"></div>
+        </Skeleton>
+        <Skeleton className="w-3/5 rounded-lg">
+          <div className="h-3 w-3/5 rounded-lg bg-default-300"></div>
+        </Skeleton>
+      </div>
+    </Card>
+  );
+};
+
+export const UserCardSkeleton: FC = () => {
+  const skeletonCardsUser = Array.from({ length: 6 });
+
+  return (
+    <div className="flex flex-wrap justify-center gap-2 mt-5">
+      {skeletonCardsUser.map((_, cardIndex) => (
+        <Card
+          key={cardIndex}
+          className="bg-fogGreyHover dark w-[288px] h-[144px] space-y-5 p-4 flex items-center "
+          radius="lg"
+        >
+          <div className="w-full h-full flex gap-4 items-center justify-center ">
+            <div>
+              <Skeleton className=" rounded-full w-12 h-12" />
+            </div>
+            <div className="w-full flex flex-col gap-2">
+              <Skeleton className="h-3 w-[150px] rounded-lg" />
+              <Skeleton className="h-3  w-[150px] rounded-lg" />
+            </div>
+          </div>
+        </Card>
+      ))}
+    </div>
+  );
+};
