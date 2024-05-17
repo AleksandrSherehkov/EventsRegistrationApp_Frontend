@@ -14,7 +14,6 @@ import { SearchBar } from '../SearchBar/SearchBar';
 import { BackButton } from '../BackButton/BackButton';
 
 import { DetailsEventSkeleton, UserCardSkeleton } from '../Skeleton/Skeleton';
-import { Card, Skeleton } from '@nextui-org/react';
 
 interface UsersProps {
   eventId: string;
