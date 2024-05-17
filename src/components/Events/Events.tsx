@@ -1,6 +1,7 @@
 'use client';
 
-import { FC, useState, useEffect } from 'react';
+import { FC, useState, useEffect, useCallback } from 'react';
+import InfiniteScroll from 'react-infinite-scroll-component';
 import { getEvents } from '@/services/api';
 import { EventResponse, EventsParams } from '@/utils/definitions';
 
@@ -17,34 +18,57 @@ interface EventsProps {
 
 export const Events: FC<EventsProps> = () => {
   const [events, setEvents] = useState<EventResponse[]>([]);
+  const [hasMore, setHasMore] = useState(true);
+  const [page, setPage] = useState(1);
   const [reset, setReset] = useState(false);
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<string | null>('');
 
-  useEffect(() => {
-    const fetchEvents = async () => {
+  const fetchEvents = useCallback(
+    async (page: number, resetEvents = false) => {
       try {
         const params: EventsParams = {
           filterQuery: searchQuery,
           date: selectedDate,
           category: selectedCategory,
+          page,
+          limit: 9,
         };
         const response = await getEvents(params);
-        setEvents(response.data);
+        if (resetEvents) {
+          setEvents(response.data);
+        } else {
+          setEvents(prevEvents => [...prevEvents, ...response.data]);
+        }
+        setHasMore(response.pages > page);
       } catch (error) {
         console.error('Failed to fetch events:', error);
       }
-    };
+    },
+    [searchQuery, selectedDate, selectedCategory]
+  );
 
-    fetchEvents();
-  }, [searchQuery, selectedDate, selectedCategory]);
+  useEffect(() => {
+    setPage(1);
+    setEvents([]);
+    fetchEvents(1, true);
+  }, [searchQuery, selectedDate, selectedCategory, fetchEvents]);
+
+  const loadMoreEvents = () => {
+    const nextPage = page + 1;
+    setPage(nextPage);
+    fetchEvents(nextPage);
+  };
 
   const handleReset = () => {
     setSearchQuery('');
     setSelectedDate(null);
     setSelectedCategory(null);
     setReset(true);
+    setPage(1);
+    setEvents([]);
+    fetchEvents(1, true);
     setTimeout(() => setReset(false), 0);
   };
 
@@ -63,11 +87,18 @@ export const Events: FC<EventsProps> = () => {
         <SelectCategory reset={reset} onChange={setSelectedCategory} />
       </div>
       <ResetButton onReset={handleReset} />
-      <ul className="mt-5 w-full flex justify-center items-center flex-wrap gap-4">
+      <InfiniteScroll
+        dataLength={events.length}
+        next={loadMoreEvents}
+        hasMore={hasMore}
+        loader={<h4>Loading...</h4>}
+        endMessage={<p className="text-red">No more events to show</p>}
+        className="mt-5 w-full flex justify-center items-center flex-wrap gap-4"
+      >
         {events.map((event: EventResponse) => (
           <EventCard key={event._id} event={event} />
         ))}
-      </ul>
+      </InfiniteScroll>
     </>
   );
 };
