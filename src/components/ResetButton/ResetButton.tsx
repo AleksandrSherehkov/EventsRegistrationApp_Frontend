@@ -17,7 +17,13 @@ export const ResetButton: FC = () => {
   };
 
   return (
-    <Button size="lg" color="primary" variant="light" onClick={handleReset}>
+    <Button
+      className="w-[200px]"
+      size="lg"
+      color="primary"
+      variant="light"
+      onClick={handleReset}
+    >
       Reset
     </Button>
   );

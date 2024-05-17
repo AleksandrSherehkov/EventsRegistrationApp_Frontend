@@ -8,7 +8,7 @@ interface HomePageProps {
 
 const HomePage: FC<HomePageProps> = ({ searchParams }) => {
   return (
-    <main className="flex flex-col  min-h-screen max-w-7xl  mx-auto ">
+    <main className="flex flex-col items-center  min-h-screen max-w-7xl  mx-auto ">
       <Events searchParams={searchParams} />
     </main>
   );

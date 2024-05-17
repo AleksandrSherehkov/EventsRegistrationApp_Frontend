@@ -2,6 +2,7 @@
 
 import { RegisterParams } from '@/utils/definitions';
 import { registerUser } from './api';
+import { redirect } from 'next/navigation';
 
 export const registerEventUser = async (
   prevState: string | undefined,
@@ -17,6 +18,7 @@ export const registerEventUser = async (
 
   const result = await registerUser(params);
   if (result.success) {
+    redirect(`/${params.eventId}/users`);
     return '';
   } else {
     return result.data.toString();

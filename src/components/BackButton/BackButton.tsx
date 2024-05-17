@@ -6,7 +6,7 @@ export const BackButton = () => {
   const router = useRouter();
 
   const handleBack = () => {
-    router.back();
+    router.push('/');
   };
 
   return (
