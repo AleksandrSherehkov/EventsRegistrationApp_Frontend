@@ -21,7 +21,7 @@ export const DataPicker: FC<DataPickerProps> = ({ reset, onChange }) => {
   }, [value, onChange]);
 
   return (
-    <div className="flex w-[284px] flex-col gap-y-2">
+    <div className="flex w-[250px] flex-col gap-y-2 ">
       <DatePicker
         className="dark max-w-[284px] text-fogWhite"
         label="Search date"
@@ -32,7 +32,7 @@ export const DataPicker: FC<DataPickerProps> = ({ reset, onChange }) => {
           onChange(newValue ? toISOStringWithDateFns(newValue) : null);
         }}
         classNames={{
-          base: '',
+          base: 'h-[48px]',
           selectorButton: '',
           selectorIcon: ' ',
           popoverContent: '',

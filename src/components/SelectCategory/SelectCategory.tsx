@@ -28,9 +28,12 @@ export const SelectCategory: FC<SelectCategoryProps> = ({
       variant="underlined"
       label="Category of Event"
       placeholder="Select a Category"
-      className="max-w-[284px] dark"
+      className="w-[250px] dark"
       classNames={{
-        trigger: 'text-default-700 ',
+        base: '',
+        mainWrapper: 'h-[48px] ',
+        innerWrapper: '  ',
+        trigger: 'text-default-700 min-h-[48px] p-0',
         popoverContent: 'bg-mediumGrey text-default-300',
       }}
       selectedKeys={selectedValue ? [selectedValue] : []}

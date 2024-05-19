@@ -1,6 +1,7 @@
 'use client';
 
-import React, { FC, useState, useEffect } from 'react';
+import React, { FC, useEffect, useState } from 'react';
+import { Select, SelectItem } from '@nextui-org/react';
 
 interface SortOptionsProps {
   reset: boolean;
@@ -32,27 +33,48 @@ export const SortOptions: FC<SortOptionsProps> = ({
   }, [sortOrder, onChangeSortOrder]);
 
   return (
-    <div className="sort-options">
-      <label htmlFor="sort-by">Sort By:</label>
-      <select
-        id="sort-by"
-        value={sortBy}
-        onChange={e => setSortBy(e.target.value)}
+    <div className="flex flex-col gap-2 w-[250px]">
+      <Select
+        items={[
+          { value: 'date', label: 'Date' },
+          { value: 'title', label: 'Title' },
+          { value: 'category', label: 'Category' },
+        ]}
+        labelPlacement="outside-left"
+        variant="bordered"
+        label="Sort By"
+        placeholder="Select Sort By"
+        className="w-52 dark"
+        classNames={{
+          label: 'min-w-20 self-center',
+          trigger: 'text-default-700 min-w-36',
+          popoverContent: 'bg-mediumGrey text-default-300',
+        }}
+        selectedKeys={sortBy ? [sortBy] : []}
+        onSelectionChange={keys => setSortBy(Array.from(keys)[0] as string)}
       >
-        <option value="date">Date</option>
-        <option value="title">Title</option>
-        <option value="category">Category</option>
-      </select>
-
-      <label htmlFor="sort-order">Sort Order:</label>
-      <select
-        id="sort-order"
-        value={sortOrder}
-        onChange={e => setSortOrder(e.target.value)}
+        {option => <SelectItem key={option.value}>{option.label}</SelectItem>}
+      </Select>
+      <Select
+        items={[
+          { value: 'asc', label: 'Ascending' },
+          { value: 'desc', label: 'Descending' },
+        ]}
+        labelPlacement="outside-left"
+        variant="bordered"
+        label="Sort Order"
+        placeholder="Select Sort Order"
+        className="w-52 dark"
+        classNames={{
+          label: 'min-w-20 self-center',
+          trigger: 'text-default-700 min-w-36 ',
+          popoverContent: 'bg-mediumGrey text-default-300 ',
+        }}
+        selectedKeys={sortOrder ? [sortOrder] : []}
+        onSelectionChange={keys => setSortOrder(Array.from(keys)[0] as string)}
       >
-        <option value="asc">Ascending</option>
-        <option value="desc">Descending</option>
-      </select>
+        {option => <SelectItem key={option.value}>{option.label}</SelectItem>}
+      </Select>
     </div>
   );
 };
