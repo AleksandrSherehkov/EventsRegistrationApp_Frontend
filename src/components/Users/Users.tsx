@@ -1,6 +1,11 @@
 'use client';
-import React, { FC, useEffect, useState } from 'react';
-import { getEventId, getUserByEventId } from '@/services/api';
+import React, { FC, useEffect, useState, useCallback } from 'react';
+import InfiniteScroll from 'react-infinite-scroll-component';
+import {
+  getEventId,
+  getUserByEventId,
+  getRegistrationsPerDay,
+} from '@/services/api';
 import {
   EventResponse,
   UserQueryParams,
@@ -12,8 +17,13 @@ import { EventDetails } from '../EventDetails/EventDetails';
 import { UserCard } from '../UserCard/UserCard';
 import { SearchBar } from '../SearchBar/SearchBar';
 import { BackButton } from '../BackButton/BackButton';
-
-import { DetailsEventSkeleton, UserCardSkeleton } from '../Skeleton/Skeleton';
+import {
+  ChartSkeleton,
+  DetailsEventSkeleton,
+  UserCardSkeleton,
+} from '../Skeleton/Skeleton';
+import { RegistrationChart } from '../RegistrationChart/RegistrationChart';
+import { Card, Skeleton } from '@nextui-org/react';
 
 interface UsersProps {
   eventId: string;
@@ -22,19 +32,27 @@ interface UsersProps {
 export const Users: FC<UsersProps> = ({ eventId }) => {
   const [eventDetails, setEventDetails] = useState<EventResponse | null>(null);
   const [users, setUsers] = useState<UserResponse[]>([]);
+  const [hasMore, setHasMore] = useState(true);
+  const [page, setPage] = useState(1);
   const [search, setSearch] = useState('');
   const [loading, setLoading] = useState(true);
+  const [registrationChart, setRegistrationChart] = useState<string | null>(
+    null
+  );
 
-  useEffect(() => {
-    const fetchData = async () => {
+  const fetchUsers = useCallback(
+    async (page: number, resetUsers = false) => {
       try {
         setLoading(true);
         const params: UserQueryParams = {
           filterQuery: search,
+          page,
+          limit: 12,
         };
-        const [eventDetails, users] = await Promise.all([
+        const [eventDetails, users, registrationUrl] = await Promise.all([
           getEventId(eventId),
           getUserByEventId(eventId, params),
+          getRegistrationsPerDay(eventId),
         ]);
 
         if (!eventDetails) {
@@ -42,16 +60,33 @@ export const Users: FC<UsersProps> = ({ eventId }) => {
         }
 
         setEventDetails(eventDetails);
-        setUsers(users.data);
+        if (resetUsers) {
+          setUsers(users.data);
+        } else {
+          setUsers(prevUsers => [...prevUsers, ...users.data]);
+        }
+        setHasMore(users.data.length > 0 && users.pages > page);
+        setRegistrationChart(registrationUrl);
       } catch (error) {
         console.error('Failed to fetch users:', error);
       } finally {
         setLoading(false);
       }
-    };
+    },
+    [search, eventId]
+  );
 
-    fetchData();
-  }, [eventId, search]);
+  useEffect(() => {
+    setPage(1);
+    setUsers([]);
+    fetchUsers(1, true);
+  }, [search, eventId, fetchUsers]);
+
+  const loadMoreUsers = () => {
+    const nextPage = page + 1;
+    setPage(nextPage);
+    fetchUsers(nextPage);
+  };
 
   return (
     <>
@@ -73,19 +108,31 @@ export const Users: FC<UsersProps> = ({ eventId }) => {
         onChange={setSearch}
         reset={false}
       />
-      {loading ? (
-        <UserCardSkeleton />
-      ) : users.length ? (
-        <ul className="flex flex-wrap justify-center gap-3 w-full h-max mx-auto  p-5">
-          {users.map(user => (
-            <UserCard key={user._id} user={user} />
-          ))}
-        </ul>
+
+      {registrationChart ? (
+        <RegistrationChart registrationChartUrl={registrationChart} />
       ) : (
-        <p className="text-fogWhiteHover text-2xl md:text-3xl text-center">
-          No registered users yet
-        </p>
+        <ChartSkeleton />
       )}
+
+      <InfiniteScroll
+        dataLength={users.length}
+        next={loadMoreUsers}
+        hasMore={hasMore}
+        loader={<UserCardSkeleton />}
+        endMessage={
+          users.length > 12 && (
+            <p className="text-fogWhiteHover text-2xl md:text-3xl text-center">
+              No more users to show
+            </p>
+          )
+        }
+        className="flex justify-center items-center flex-wrap gap-4 mt-5"
+      >
+        {users.map((user: UserResponse) => (
+          <UserCard key={user._id} user={user} />
+        ))}
+      </InfiniteScroll>
     </>
   );
 };

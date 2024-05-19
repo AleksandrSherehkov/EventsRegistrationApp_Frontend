@@ -17,10 +17,13 @@ export const registerEventUser = async (
   };
 
   const result = await registerUser(params);
+
   if (result.success) {
     redirect(`/${params.eventId}/users`);
     return '';
   } else {
-    return result.data.toString();
+    return typeof result.data === 'object'
+      ? JSON.stringify(result.data)
+      : result.data.toString();
   }
 };

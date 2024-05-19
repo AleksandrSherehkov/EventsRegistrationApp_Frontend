@@ -13,8 +13,8 @@ import {
 } from '@/utils/definitions';
 
 const instance = axios.create({
-  baseURL: 'http://localhost:3000/api',
-  // baseURL: 'https://eventsregistrationapp-backend.onrender.com/api',
+  // baseURL: 'http://localhost:3000/api',
+  baseURL: 'https://eventsregistrationapp-backend.onrender.com/api',
 });
 
 export const getEvents = async (
@@ -79,7 +79,7 @@ export const getUserByEventId = async (
         params,
       }
     );
-    console.log('Fetched event details successfully:');
+    console.log('Fetched user details successfully:');
     return data;
   } catch (error: unknown) {
     handleError(error);
@@ -92,6 +92,18 @@ export const getEventId = async (eventId: string): Promise<EventResponse> => {
     const { data } = await instance.get<EventResponse>(`/events/${eventId}`);
     console.log('Fetched event details successfully:');
     return data;
+  } catch (error: unknown) {
+    handleError(error);
+    throw error;
+  }
+};
+
+export const getRegistrationsPerDay = async (
+  eventId: string
+): Promise<string> => {
+  try {
+    const url = `https://eventsregistrationapp-backend.onrender.com/api/users/registrations/${eventId}`;
+    return url;
   } catch (error: unknown) {
     handleError(error);
     throw error;

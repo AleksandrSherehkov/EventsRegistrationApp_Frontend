@@ -42,7 +42,7 @@ export const CardSkeleton: FC = () => {
 export const DetailsEventSkeleton: FC = () => {
   return (
     <Card
-      className="bg-fogGreyHover dark w-[519px] h-[164px] space-y-5 p-4"
+      className="bg-fogGreyHover dark w-full md:w-[519px] md:h-[164px] space-y-5 p-4"
       radius="lg"
     >
       <Skeleton className=" h-8 rounded-lg">
@@ -64,7 +64,7 @@ export const DetailsEventSkeleton: FC = () => {
 };
 
 export const UserCardSkeleton: FC = () => {
-  const skeletonCardsUser = Array.from({ length: 6 });
+  const skeletonCardsUser = Array.from({ length: 12 });
 
   return (
     <div className="flex flex-wrap justify-center gap-2 mt-5">
@@ -86,5 +86,22 @@ export const UserCardSkeleton: FC = () => {
         </Card>
       ))}
     </div>
+  );
+};
+
+export const ChartSkeleton: FC = () => {
+  const skeletonCardsRow = Array.from({ length: 9 });
+
+  return (
+    <Card
+      className="mx-auto flex flex-col items-center gap-1 md:gap-2 mt-5 dark w-full h-[88px] md:w-[728px] md:h-[178px] lg:w-[800px] lg:h-[200px] bg-fogGreyHover md:p-4 p-2"
+      radius="lg"
+    >
+      {skeletonCardsRow.map((_, cardIndex) => (
+        <div key={cardIndex} className="w-full">
+          <Skeleton className="h-1 md:h-3 w-full rounded-lg" />
+        </div>
+      ))}
+    </Card>
   );
 };
