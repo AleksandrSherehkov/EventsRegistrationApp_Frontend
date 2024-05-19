@@ -19,7 +19,7 @@ export const EventCard: FC<EventCardProps> = ({ event }) => {
     <Card as="li" key={event._id} className="dark w-[340px] ">
       <CardHeader className="flex gap-3">
         <div className="flex flex-col">
-          <p className="h-12 text-base text-slate-500 font-semibold">
+          <p className=" w-[316px] text-ellipsis overflow-hidden h-12 text-base text-slate-500 font-semibold">
             {event.title}
           </p>
           <p className="text-small text-default-500">

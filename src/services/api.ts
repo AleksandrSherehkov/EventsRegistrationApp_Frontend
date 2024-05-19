@@ -13,8 +13,8 @@ import {
 } from '@/utils/definitions';
 
 const instance = axios.create({
-  // baseURL: 'http://localhost:3000/api',
-  baseURL: 'https://eventsregistrationapp-backend.onrender.com/api',
+  baseURL: 'http://localhost:3000/api',
+  // baseURL: 'https://eventsregistrationapp-backend.onrender.com/api',
 });
 
 export const getEvents = async (

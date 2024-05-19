@@ -13,6 +13,7 @@ import { SearchBar } from '../SearchBar/SearchBar';
 import { DataPicker } from '../DataPicker/DataPicker';
 import { ResetButton } from '../ResetButton/ResetButton';
 import { CardSkeleton } from '../Skeleton/Skeleton';
+import { SortOptions } from '../SortOptionsEvents/SortOptionsEvents';
 
 interface EventsProps {
   initialParams?: EventsParams;
@@ -26,6 +27,8 @@ export const Events: FC<EventsProps> = () => {
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<string | null>('');
+  const [sortBy, setSortBy] = useState<string>('date');
+  const [sortOrder, setSortOrder] = useState<string>('asc');
 
   const fetchEvents = useCallback(
     async (page: number, resetEvents = false) => {
@@ -36,7 +39,10 @@ export const Events: FC<EventsProps> = () => {
           category: selectedCategory,
           page,
           limit: 9,
+          sortBy,
+          sortOrder,
         };
+        console.log(`params:`, params);
         const response = await getEvents(params);
         if (resetEvents) {
           setEvents(response.data);
@@ -48,14 +54,21 @@ export const Events: FC<EventsProps> = () => {
         console.error('Failed to fetch events:', error);
       }
     },
-    [searchQuery, selectedDate, selectedCategory]
+    [searchQuery, selectedDate, selectedCategory, sortBy, sortOrder]
   );
 
   useEffect(() => {
     setPage(1);
     setEvents([]);
     fetchEvents(1, true);
-  }, [searchQuery, selectedDate, selectedCategory, fetchEvents]);
+  }, [
+    searchQuery,
+    selectedDate,
+    selectedCategory,
+    sortBy,
+    sortOrder,
+    fetchEvents,
+  ]);
 
   const loadMoreEvents = () => {
     const nextPage = page + 1;
@@ -67,6 +80,8 @@ export const Events: FC<EventsProps> = () => {
     setSearchQuery('');
     setSelectedDate(null);
     setSelectedCategory(null);
+    setSortBy('date');
+    setSortOrder('asc');
     setReset(true);
     setPage(1);
     setEvents([]);
@@ -77,7 +92,7 @@ export const Events: FC<EventsProps> = () => {
   return (
     <>
       <Title text="Find your" span="events..." />
-      <div className="gap-4 md:gap-10 w-full flex  flex-col justify-center items-center xl:items-start xl:flex-row xl:gap-20  ">
+      <div className="gap-4 md:gap-10 w-full flex flex-col justify-center items-center xl:items-start xl:flex-row xl:gap-20">
         <SearchBar
           label="Search by title Events or Country"
           placeholder="Enter query"
@@ -87,6 +102,11 @@ export const Events: FC<EventsProps> = () => {
         />
         <DataPicker reset={reset} onChange={setSelectedDate} />
         <SelectCategory reset={reset} onChange={setSelectedCategory} />
+        <SortOptions
+          reset={reset}
+          onChangeSortBy={setSortBy}
+          onChangeSortOrder={setSortOrder}
+        />
       </div>
       <ResetButton onReset={handleReset} />
       <InfiniteScroll
@@ -95,7 +115,7 @@ export const Events: FC<EventsProps> = () => {
         hasMore={hasMore}
         loader={<CardSkeleton />}
         endMessage={
-          <p className="text-fogWhiteHover text-2xl md:text-3xl ">
+          <p className="text-fogWhiteHover text-2xl md:text-3xl">
             No more events to show
           </p>
         }

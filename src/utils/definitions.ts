@@ -21,6 +21,8 @@ export interface EventsParams {
   date?: string | null;
   page?: number;
   limit?: number;
+  sortBy?: string;
+  sortOrder?: string;
 }
 
 export interface UserQueryParams {
