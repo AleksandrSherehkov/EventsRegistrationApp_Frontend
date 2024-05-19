@@ -42,7 +42,6 @@ export const Events: FC<EventsProps> = () => {
           sortBy,
           sortOrder,
         };
-        console.log(`params:`, params);
         const response = await getEvents(params);
         if (resetEvents) {
           setEvents(response.data);

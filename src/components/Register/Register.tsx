@@ -19,11 +19,7 @@ interface RegisterProps {
 }
 
 export const Register: FC<RegisterProps> = ({ idEvent }) => {
-  const [errorMessage, dispatch] = useFormState(
-    registerEventUser,
-    undefined
-  );
-  console.log(`errorMessage:`, errorMessage);
+  const [errorMessage, dispatch] = useFormState(registerEventUser, undefined);
 
   const { nameValid, validateName } = useNameValidation();
   const { emailValid, validateEmail } = useEmailValidation();
