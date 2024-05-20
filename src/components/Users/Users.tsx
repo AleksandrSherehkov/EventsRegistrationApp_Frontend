@@ -36,9 +36,10 @@ export const Users: FC<UsersProps> = ({ eventId }) => {
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState('');
   const [loading, setLoading] = useState(true);
-  const [registrationChart, setRegistrationChart] = useState<string | null>(
-    null
-  );
+  const [registrationChartData, setRegistrationChartData] = useState<{
+    labels: string[];
+    data: number[];
+  } | null>(null);
 
   const fetchUsers = useCallback(
     async (page: number, resetUsers = false) => {
@@ -49,7 +50,7 @@ export const Users: FC<UsersProps> = ({ eventId }) => {
           page,
           limit: 12,
         };
-        const [eventDetails, users, registrationUrl] = await Promise.all([
+        const [eventDetails, users, registrationData] = await Promise.all([
           getEventId(eventId),
           getUserByEventId(eventId, params),
           getRegistrationsPerDay(eventId),
@@ -66,7 +67,7 @@ export const Users: FC<UsersProps> = ({ eventId }) => {
           setUsers(prevUsers => [...prevUsers, ...users.data]);
         }
         setHasMore(users.data.length > 0 && users.pages > page);
-        setRegistrationChart(registrationUrl);
+        setRegistrationChartData(registrationData);
       } catch (error) {
         console.error('Failed to fetch users:', error);
       } finally {
@@ -109,8 +110,8 @@ export const Users: FC<UsersProps> = ({ eventId }) => {
         reset={false}
       />
 
-      {registrationChart ? (
-        <RegistrationChart registrationChartUrl={registrationChart} />
+      {registrationChartData ? (
+        <RegistrationChart data={registrationChartData} />
       ) : (
         <ChartSkeleton />
       )}

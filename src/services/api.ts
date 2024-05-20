@@ -10,6 +10,7 @@ import {
   UserResponse,
   RegisterUserResponse,
   UserQueryParams,
+  RegistrationsPerDayResponse,
 } from '@/utils/definitions';
 
 const instance = axios.create({
@@ -100,10 +101,13 @@ export const getEventId = async (eventId: string): Promise<EventResponse> => {
 
 export const getRegistrationsPerDay = async (
   eventId: string
-): Promise<string> => {
+): Promise<RegistrationsPerDayResponse> => {
   try {
-    const url = `https://eventsregistrationapp-backend.onrender.com/api/users/registrations/${eventId}`;
-    return url;
+    const { data } = await instance.get<RegistrationsPerDayResponse>(
+      `/users/registrations/${eventId}`
+    );
+    console.log('Fetched registrations per day successfully:');
+    return data;
   } catch (error: unknown) {
     handleError(error);
     throw error;

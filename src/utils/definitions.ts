@@ -52,3 +52,8 @@ export interface UserResponse {
   referralSource: string;
   eventIds: string[];
 }
+
+export interface RegistrationsPerDayResponse {
+  labels: string[];
+  data: number[];
+}
