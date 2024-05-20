@@ -23,7 +23,6 @@ import {
   UserCardSkeleton,
 } from '../Skeleton/Skeleton';
 import { RegistrationChart } from '../RegistrationChart/RegistrationChart';
-import { Card, Skeleton } from '@nextui-org/react';
 
 interface UsersProps {
   eventId: string;
@@ -116,24 +115,30 @@ export const Users: FC<UsersProps> = ({ eventId }) => {
         <ChartSkeleton />
       )}
 
-      <InfiniteScroll
-        dataLength={users.length}
-        next={loadMoreUsers}
-        hasMore={hasMore}
-        loader={<UserCardSkeleton />}
-        endMessage={
-          users.length > 12 && (
-            <p className="text-fogWhiteHover text-2xl md:text-3xl text-center">
-              No more users to show
-            </p>
-          )
-        }
-        className="flex justify-center items-center flex-wrap gap-4 mt-5"
-      >
-        {users.map((user: UserResponse) => (
-          <UserCard key={user._id} user={user} />
-        ))}
-      </InfiniteScroll>
+      {users.length === 0 && !loading ? (
+        <p className="text-fogWhiteHover text-2xl md:text-3xl text-center">
+          Users not registered yet
+        </p>
+      ) : (
+        <InfiniteScroll
+          dataLength={users.length}
+          next={loadMoreUsers}
+          hasMore={hasMore}
+          loader={<UserCardSkeleton />}
+          endMessage={
+            users.length > 12 && (
+              <p className="text-fogWhiteHover text-2xl md:text-3xl text-center">
+                No more users to show
+              </p>
+            )
+          }
+          className="flex justify-center items-center flex-wrap gap-4 mt-5"
+        >
+          {users.map((user: UserResponse) => (
+            <UserCard key={user._id} user={user} />
+          ))}
+        </InfiniteScroll>
+      )}
     </>
   );
 };
